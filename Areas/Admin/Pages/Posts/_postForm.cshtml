@@ -1,0 +1,47 @@
+﻿@model CodearxEFCoreRP3CMS.Models.Post
+
+<h4>Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.ID" class="control-label"></label>
+                <input asp-for="@Model.ID" class="form-control" />
+                <span asp-validation-for="@Model.ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Title" class="control-label"></label>
+                <input asp-for="@Model.Title" class="form-control" />
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Content" class="control-label"></label>
+                <textarea asp-for="@Model.Content" class="form-control"></textarea>
+                <span asp-validation-for="@Model.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Created" class="control-label"></label>
+                <input asp-for="@Model.Created" class="form-control" />
+                <span asp-validation-for="@Model.Created" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Published" class="control-label"></label>
+                <input asp-for="@Model.Published" class="form-control" />
+                <span asp-validation-for="@Model.Published" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
