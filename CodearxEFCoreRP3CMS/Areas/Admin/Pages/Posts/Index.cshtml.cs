@@ -12,18 +12,19 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 {
     public class IndexModel : PageModel
     {
-        private readonly CMSContext _context;
+        private readonly IPostRepository _repository;
 
-        public IndexModel(CMSContext context)
+        public IndexModel(IPostRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        public IList<Post> Post { get; set; }
+        public IList<Post> Posts { get; set; }
 
+        // URL: {domain}/admin/post
         public async Task OnGetAsync()
         {
-            Post = await _context.Posts.ToListAsync();
+            Posts = await _repository.GetAll();
         }
     }
 }

@@ -1,4 +1,4 @@
-# Coderax CMS using of ASP.NET core 3.1 Razor Page and Entity Framework core
+# Codearx CMS using of ASP.NET core 3.1 Razor Page and Entity Framework core
 A simple Content Management System for managing and publishing dynamic content of a modern website.
 
 ## Framworks and Tools

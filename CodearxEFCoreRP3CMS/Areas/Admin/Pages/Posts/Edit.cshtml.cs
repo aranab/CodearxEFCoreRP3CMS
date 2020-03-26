@@ -24,15 +24,15 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
         public Post Post { get; set; }
 
         // URL: {domain}/admin/post/edit/post-to-edit
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string postId)
         {
-            if (id == null)
+            if (postId == null)
             {
                 return NotFound();
             }
 
             // TODO: to retrieve the model from the data store
-            Post = await _repository.Get(id);
+            Post = await _repository.Get(postId);
 
             if (Post == null)
             {
@@ -42,9 +42,30 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
             return Page();
         }
 
-        // {domain}/admin/post/edit/post-to-edit
-        //public async Task<IActionResult> OnPostAsync()
-        //{
-        //}
+        // URL: {domain}/admin/post/edit/post-to-edit
+        public async Task<IActionResult> OnPostAsync(string postId)
+        {
+            if (postId == null)
+            {
+                return NotFound();
+            }
+
+            var postToUpdate = await _repository.Get(postId);
+
+            if (postToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            // TODO: update model in data store
+            await _repository.Edit(postId, Post);
+
+            return RedirectToPage("./Index");
+        }
     }
 }

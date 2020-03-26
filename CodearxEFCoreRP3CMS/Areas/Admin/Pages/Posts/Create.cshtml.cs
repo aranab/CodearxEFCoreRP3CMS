@@ -12,13 +12,14 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 {
     public class CreateModel : PageModel
     {
-        private readonly CodearxEFCoreRP3CMS.Data.CMSContext _context;
+        private readonly IPostRepository _repository;
 
-        public CreateModel(CodearxEFCoreRP3CMS.Data.CMSContext context)
+        public CreateModel(IPostRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
+        // URL: {domain}/admin/post/create
         public IActionResult OnGet()
         {
             return Page();
@@ -27,8 +28,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
         [BindProperty]
         public Post Post { get; set; }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+        // URL: {domain}/admin/post/create
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -36,8 +36,8 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
                 return Page();
             }
 
-            _context.Posts.Add(Post);
-            await _context.SaveChangesAsync();
+            // TODO: add model in data store
+           await _repository.Create(Post);
 
             return RedirectToPage("./Index");
         }

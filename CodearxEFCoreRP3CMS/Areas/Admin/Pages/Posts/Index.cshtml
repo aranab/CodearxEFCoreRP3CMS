@@ -14,25 +14,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Post[0].Title)
+                @Html.DisplayNameFor(model => model.Posts[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Post[0].Content)
+                @Html.DisplayNameFor(model => model.Posts[0].Content)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Post[0].Created)
+                @Html.DisplayNameFor(model => model.Posts[0].Created)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Post[0].Published)
+                @Html.DisplayNameFor(model => model.Posts[0].Published)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Post[0].AuthorID)
+                @Html.DisplayNameFor(model => model.Posts[0].AuthorID)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Post)
+        @foreach (var item in Model.Posts)
         {
             <tr>
                 <td>
