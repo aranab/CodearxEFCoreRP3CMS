@@ -10,6 +10,7 @@ A simple Content Management System for managing and publishing dynamic content o
  - [Roslyn Analyzers](https://www.nuget.org/packages/Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.8)
  - [xUnit](https://xunit.net/)
  - [C# unit testing with xUnit](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test)
+ - [Telerik JustMock Lite](https://github.com/telerik/JustMockLite)
  - [SQL Server Express LocalDB](https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver15)
  - [Bootstrap 4.3.1](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
  - HTML5
