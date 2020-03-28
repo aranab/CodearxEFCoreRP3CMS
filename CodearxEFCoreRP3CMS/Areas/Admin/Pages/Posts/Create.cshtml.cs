@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CodearxEFCoreRP3CMS.Data;
 using CodearxEFCoreRP3CMS.Models;
+using CodearxEFCoreRP3CMS.Models.ModelBinders;
 
 namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 {
@@ -22,6 +23,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
         // URL: {domain}/admin/post/create
         public IActionResult OnGet()
         {
+            Post = new Post() { Tags = new List<string>() { "test-1", "test-2" } };
             return Page();
         }
 

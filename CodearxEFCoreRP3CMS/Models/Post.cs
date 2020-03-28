@@ -1,8 +1,8 @@
-﻿using System;
+﻿using CodearxEFCoreRP3CMS.Models.ModelBinders;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CodearxEFCoreRP3CMS.Models
 {
@@ -23,7 +23,8 @@ namespace CodearxEFCoreRP3CMS.Models
         [Display(Name = "Date Published")]
         public DateTime? Published { get; set; }
 
-
+        [BindProperty(BinderType = typeof(PostModelBinder))]
+        public IList<string> Tags { get; set; }
         public int AuthorID { get; set; }
     }
 }

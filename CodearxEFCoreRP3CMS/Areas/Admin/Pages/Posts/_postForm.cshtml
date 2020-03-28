@@ -32,6 +32,11 @@
                 <span asp-validation-for="@Model.Published" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="@Model.Tags" class="control-label"></label>
+                <input asp-for="@Model.Tags" value="@string.Join(", ", Model.Tags)" class="form-control" />
+                <span asp-validation-for="@Model.Tags" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />
             </div>
         </form>

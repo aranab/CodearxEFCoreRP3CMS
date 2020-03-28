@@ -1,0 +1,33 @@
+﻿@page
+@model Tags.IndexModel
+
+@{
+    ViewData["Title"] = "Tags";
+}
+
+<h2>Tags</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tag Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tags)
+        {
+            <tr>
+                <td>
+                    @item
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-tag="@item">Edit</a> |
+                    <a asp-page="./Delete" asp-route-tag="@item">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
