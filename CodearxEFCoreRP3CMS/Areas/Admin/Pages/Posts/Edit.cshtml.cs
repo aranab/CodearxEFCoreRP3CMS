@@ -45,27 +45,35 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
         // URL: {domain}/admin/post/edit/post-to-edit
         public async Task<IActionResult> OnPostAsync(string postId)
         {
-            if (postId == null)
-            {
-                return NotFound();
-            }
-
-            var postToUpdate = await _repository.Get(postId);
-
-            if (postToUpdate == null)
-            {
-                return NotFound();
-            }
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            // TODO: update model in data store
-            await _repository.Edit(postId, Post);
+            if (string.IsNullOrWhiteSpace(Post.ID))
+            {
+                Post.ID = Post.Title;
+            }
 
-            return RedirectToPage("./Index");
+            Post.ID = Post.ID.MakeUrlFriendly();
+            Post.Tags = Post.Tags.Select(tag => tag.MakeUrlFriendly()).ToList();
+
+            try
+            {
+                await _repository.Edit(postId, Post);
+
+                return RedirectToPage("./Index");
+            }
+            catch (KeyNotFoundException /*ex*/)
+            {
+                return NotFound();
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError("key", ex.Message);
+
+                return Page();
+            }
         }
     }
 }

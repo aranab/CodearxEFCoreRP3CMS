@@ -9,8 +9,8 @@ namespace CodearxEFCoreRP3CMS.Data
     public interface IPostRepository
     {
         Task<Post> Get(string id);
-        Task Edit(string postId, Post post);
-        Task Create(Post post);
         Task<IList<Post>> GetAll();
+        Task Create(Post model);
+        Task Edit(string id, Post updatedItem);     
     }
 }

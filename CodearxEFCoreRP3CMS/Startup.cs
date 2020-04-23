@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CodearxEFCoreRP3CMS.Data;
+using CodearxEFCoreRP3CMS.Models;
 using CodearxEFCoreRP3CMS.Models.ModelBinders;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,10 +29,20 @@ namespace CodearxEFCoreRP3CMS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CMSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CMSContext")));
+
+            services.AddIdentity<CmsUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<CMSContext>()
+                .AddDefaultTokenProviders();
+
             services.AddRazorPages();
 
-            services.AddDbContext<CMSContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("CMSContext")));
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Account/Login";
+                options.LogoutPath = $"/Account/Logout";
+                options.AccessDeniedPath = $"//Account/AccessDenied";
+            });
 
             services.AddScoped<IPostRepository, PostRepository>();
         }
@@ -54,6 +66,7 @@ namespace CodearxEFCoreRP3CMS
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

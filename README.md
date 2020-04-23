@@ -8,6 +8,7 @@ A simple Content Management System for managing and publishing dynamic content o
  - [Entity Framework core 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/3.1.2)
  - [Areas in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/areas?view=aspnetcore-3.1)
  - [Roslyn Analyzers](https://www.nuget.org/packages/Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.8)
+ - [User Authentication by ASP.NET Core Identity](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore/3.1.3)
  - [xUnit](https://xunit.net/)
  - [C# unit testing with xUnit](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test)
  - [Telerik JustMock Lite](https://github.com/telerik/JustMockLite)

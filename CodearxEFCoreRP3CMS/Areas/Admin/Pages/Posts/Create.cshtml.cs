@@ -23,7 +23,6 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
         // URL: {domain}/admin/post/create
         public IActionResult OnGet()
         {
-            Post = new Post() { Tags = new List<string>() { "test-1", "test-2" } };
             return Page();
         }
 
@@ -38,10 +37,26 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
                 return Page();
             }
 
-            // TODO: add model in data store
-           await _repository.Create(Post);
+            if (string.IsNullOrWhiteSpace(Post.ID))
+            {
+                Post.ID = Post.Title;
+            }
 
-            return RedirectToPage("./Index");
+            Post.ID = Post.ID.MakeUrlFriendly();
+            Post.Tags = Post.Tags.Select(tag => tag.MakeUrlFriendly()).ToList();
+
+            try
+            {
+                await _repository.Create(Post);
+
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("key", ex.Message);
+
+                return Page();
+            }
         }
     }
 }
