@@ -12,48 +12,51 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 {
     public class DeleteModel : PageModel
     {
-        private readonly CodearxEFCoreRP3CMS.Data.CMSContext _context;
+        private readonly IPostRepository _repository;
 
-        public DeleteModel(CodearxEFCoreRP3CMS.Data.CMSContext context)
+        public DeleteModel(IPostRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        [BindProperty]
         public Post Post { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        // URL: {domain}/admin/post/delete/get-to-delete
+        public async Task<IActionResult> OnGetAsync(string postId)
         {
-            if (id == null)
+            if (postId == null)
             {
                 return NotFound();
             }
 
-            Post = await _context.Posts.FirstOrDefaultAsync(m => m.ID == id);
+            Post = await _repository.Get(postId);
 
             if (Post == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        // URL: {domain}/admin/post/delete/post-to-delete
+        public async Task<IActionResult> OnPostAsync(string postId)
         {
-            if (id == null)
+            if (postId == null)
+            {
+                return NotFound();
+            }            
+
+            try
+            {
+                await _repository.Delete(postId);
+
+                return RedirectToPage("./Index");
+            }
+            catch (KeyNotFoundException /*ex*/)
             {
                 return NotFound();
             }
-
-            Post = await _context.Posts.FindAsync(id);
-
-            if (Post != null)
-            {
-                _context.Posts.Remove(Post);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }

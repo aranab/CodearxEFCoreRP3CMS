@@ -28,6 +28,7 @@ namespace CodearxEFCoreRP3CMS.Data
             return await _context.Posts
                 .Include(p => p.Author)
                 .OrderByDescending(p => p.Created)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -62,6 +63,20 @@ namespace CodearxEFCoreRP3CMS.Data
             post.Tags = updatedItem.Tags;
 
             await _context.SaveChangesAsync();
-        }        
+        }
+        
+        public async Task Delete(string id)
+        {
+            var post = await _context.Posts
+                .FirstOrDefaultAsync(p => p.ID == id);
+
+            if (post == null)
+            {
+                throw new KeyNotFoundException($"The post with the id of {id} does not exist.");
+            }
+
+            _context.Posts.Remove(post);
+            await _context.SaveChangesAsync();
+        }
     }
 }

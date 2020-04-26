@@ -11,6 +11,7 @@ namespace CodearxEFCoreRP3CMS.Data
         Task<Post> Get(string id);
         Task<IList<Post>> GetAll();
         Task Create(Post model);
-        Task Edit(string id, Post updatedItem);     
+        Task Edit(string id, Post updatedItem);
+        Task Delete(string id);
     }
 }

@@ -45,6 +45,9 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
             Post.ID = Post.ID.MakeUrlFriendly();
             Post.Tags = Post.Tags.Select(tag => tag.MakeUrlFriendly()).ToList();
 
+            Post.Created = DateTime.Now;
+            Post.AuthorID = "03b98dff-5653-4df2-9a36-3dfe1a8f1d80";
+
             try
             {
                 await _repository.Create(Post);
@@ -53,7 +56,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("key", ex.Message);
+                ModelState.AddModelError("", ex.Message);
 
                 return Page();
             }

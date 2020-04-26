@@ -21,20 +21,22 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Tags
         public string Tag { get; set; }
 
         // URL: {domain}/admin/tag/edit/tag-to-edit
-        public async Task<ActionResult> OnGetAsync(string tag)
+        public async Task<IActionResult> OnGetAsync(string tag)
         {
-            if (!await _repository.Exists(tag))
+            try
+            {
+                Tag = await _repository.Get(tag);
+
+                return Page();
+            }
+            catch (KeyNotFoundException /*ex*/)
             {
                 return NotFound();
             }
-
-            Tag = tag;
-
-            return Page();
         }
 
         // URL: {domain}/admin/tag/edit/tag-to-edit
-        public async Task<ActionResult> OnPostAsync(string oldTag)
+        public async Task<IActionResult> OnPostAsync(string oldTag)
         {
             var tags = await _repository.GetAll();
 

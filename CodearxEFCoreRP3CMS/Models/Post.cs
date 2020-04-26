@@ -41,7 +41,6 @@ namespace CodearxEFCoreRP3CMS.Models
             }
         }
 
-        [Required]
         public string AuthorID { get; set; }
 
         public CmsUser Author { get; set; }

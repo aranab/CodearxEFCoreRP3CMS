@@ -12,28 +12,30 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 {
     public class DetailsModel : PageModel
     {
-        private readonly CodearxEFCoreRP3CMS.Data.CMSContext _context;
+        private readonly IPostRepository _repository;
 
-        public DetailsModel(CodearxEFCoreRP3CMS.Data.CMSContext context)
+        public DetailsModel(IPostRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public Post Post { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        // URL: {domain}/admin/post/details/get-to-details
+        public async Task<IActionResult> OnGetAsync(string postId)
         {
-            if (id == null)
+            if (postId == null)
             {
                 return NotFound();
             }
 
-            Post = await _context.Posts.FirstOrDefaultAsync(m => m.ID == id);
+            Post = await _repository.Get(postId);
 
             if (Post == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
     }

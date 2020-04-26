@@ -23,7 +23,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
         [BindProperty]
         public Post Post { get; set; }
 
-        // URL: {domain}/admin/post/edit/post-to-edit
+        // URL: {domain}/admin/post/edit/get-to-edit
         public async Task<IActionResult> OnGetAsync(string postId)
         {
             if (postId == null)
@@ -70,7 +70,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
             }
             catch(Exception ex)
             {
-                ModelState.AddModelError("key", ex.Message);
+                ModelState.AddModelError("", ex.Message);
 
                 return Page();
             }

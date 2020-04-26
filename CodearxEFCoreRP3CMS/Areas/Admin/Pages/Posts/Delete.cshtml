@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{postId}"
 @model CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts.DeleteModel
 
 @{
@@ -43,7 +43,7 @@
             @Html.DisplayFor(model => model.Post.AuthorID)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="Post.ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

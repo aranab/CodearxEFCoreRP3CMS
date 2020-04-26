@@ -41,10 +41,11 @@ namespace CodearxEFCoreRP3CMS
             {
                 options.LoginPath = $"/Account/Login";
                 options.LogoutPath = $"/Account/Logout";
-                options.AccessDeniedPath = $"//Account/AccessDenied";
+                options.AccessDeniedPath = $"/Account/AccessDenied";
             });
 
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
