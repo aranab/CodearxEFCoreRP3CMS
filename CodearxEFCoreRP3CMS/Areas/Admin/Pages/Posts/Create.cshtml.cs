@@ -20,7 +20,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
             _repository = repository;
         }
 
-        // URL: {domain}/admin/post/create
+        // URL: {domain}/admin/posts/create
         public IActionResult OnGet()
         {
             return Page();
@@ -29,7 +29,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
         [BindProperty]
         public Post Post { get; set; }
 
-        // URL: {domain}/admin/post/create
+        // URL: {domain}/admin/posts/create
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

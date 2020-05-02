@@ -21,7 +21,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 
         public Post Post { get; set; }
 
-        // URL: {domain}/admin/post/delete/get-to-delete
+        // URL: {domain}/admin/posts/delete/get-to-delete
         public async Task<IActionResult> OnGetAsync(string postId)
         {
             if (postId == null)
@@ -39,7 +39,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
             return Page();
         }
 
-        // URL: {domain}/admin/post/delete/post-to-delete
+        // URL: {domain}/admin/posts/delete/post-to-delete
         public async Task<IActionResult> OnPostAsync(string postId)
         {
             if (postId == null)

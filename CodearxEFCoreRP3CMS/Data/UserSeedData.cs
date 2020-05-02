@@ -20,17 +20,24 @@ namespace CodearxEFCoreRP3CMS.Data
     {
         public static async Task Initialize(IServiceProvider services)
         {
-
             var userList = services.GetRequiredService<IConfiguration>().GetSection("UserList").Get<List<InitialUserInfo>>();
             var userManager = services.GetService<UserManager<CmsUser>>();
 
             foreach (var userInfo in userList)
             {
-                var userId = await EnsureUser(userManager, userInfo);
+                await EnsureUser(userManager, userInfo);
+            }
+
+            var roleList = services.GetRequiredService<IConfiguration>().GetSection("RoleList").Get<List<string>>();
+            var roleManager = services.GetService<RoleManager<IdentityRole>>();
+
+            foreach (var roleName in roleList)
+            {
+                await EnsureRole(roleManager, roleName);
             }
         }
 
-        private static async Task<string> EnsureUser(UserManager<CmsUser> userManager, InitialUserInfo userInfo)
+        private static async Task EnsureUser(UserManager<CmsUser> userManager, InitialUserInfo userInfo)
         {
             var user = await userManager.FindByNameAsync(userInfo.UserName);
 
@@ -43,10 +50,17 @@ namespace CodearxEFCoreRP3CMS.Data
                     DisplayName = userInfo.DisplayName,
                     EmailConfirmed = true
                 };
+
                 await userManager.CreateAsync(user, userInfo.Password);
             }
+        }
 
-            return user.Id;
+        private static async Task EnsureRole(RoleManager<IdentityRole> roleManager, string roleName)
+        {
+            if (await roleManager.FindByNameAsync(roleName) == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
         }
     }
 }

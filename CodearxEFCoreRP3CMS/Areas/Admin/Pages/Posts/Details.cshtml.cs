@@ -21,7 +21,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 
         public Post Post { get; set; }
 
-        // URL: {domain}/admin/post/details/get-to-details
+        // URL: {domain}/admin/posts/details/get-to-details
         public async Task<IActionResult> OnGetAsync(string postId)
         {
             if (postId == null)
