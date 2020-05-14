@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CodearxEFCoreRP3CMS.Data
@@ -18,6 +19,11 @@ namespace CodearxEFCoreRP3CMS.Data
         public async Task<CmsUser> GetUserByNameAsync(string username)
         {
             return await _userManager.FindByNameAsync(username);
+        }
+
+        public string GetUserId(ClaimsPrincipal principal)
+        {
+            return _userManager.GetUserId(principal);
         }
 
         public async Task<IList<CmsUser>> GetAllUsersAsync()

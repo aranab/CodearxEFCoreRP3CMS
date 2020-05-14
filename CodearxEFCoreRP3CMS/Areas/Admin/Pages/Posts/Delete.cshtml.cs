@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CodearxEFCoreRP3CMS.Data;
 using CodearxEFCoreRP3CMS.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 {
+    [Authorize(Roles = "admin, editor")]
     public class DeleteModel : PageModel
     {
         private readonly IPostRepository _repository;
@@ -29,7 +31,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
                 return NotFound();
             }
 
-            Post = await _repository.Get(postId);
+            Post = await _repository.GetAsync(postId);
 
             if (Post == null)
             {
@@ -49,7 +51,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 
             try
             {
-                await _repository.Delete(postId);
+                await _repository.DeleteAsync(postId);
 
                 return RedirectToPage("./Index");
             }

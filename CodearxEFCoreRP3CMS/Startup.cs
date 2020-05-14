@@ -28,13 +28,16 @@ namespace CodearxEFCoreRP3CMS
                 .AddEntityFrameworkStores<CMSContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddRazorPages();
+            services.AddRazorPages(options => 
+            {
+                options.Conventions.AuthorizeAreaFolder("Admin", "/");
+            });
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = $"/Account/Login";
-                options.LogoutPath = $"/Account/Logout";
-                options.AccessDeniedPath = $"/Account/AccessDenied";
+                options.Cookie.Name = "CodearxEFCoreRP3CMS";
+                options.LoginPath = $"/Admin/Login";
+                options.LogoutPath = $"/Admin/Logout";
             });
 
             services.AddScoped<IUserRepository, UserRepository>();

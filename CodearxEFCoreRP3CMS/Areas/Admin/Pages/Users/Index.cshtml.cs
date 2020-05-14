@@ -1,11 +1,13 @@
 using CodearxEFCoreRP3CMS.Data;
 using CodearxEFCoreRP3CMS.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Users
 {
+    [Authorize(Roles = "admin")]
     public class IndexModel : PageModel
     {
         private readonly IUserRepository _userRepository;
@@ -16,7 +18,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Users
         }
 
         public IList<CmsUser> Users { get; set; }
-
+        
         // URL: {domain}/admin/users
         public async Task OnGetAsync()
         {

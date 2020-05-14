@@ -8,10 +8,11 @@ namespace CodearxEFCoreRP3CMS.Data
 {
     public interface IPostRepository
     {
-        Task<Post> Get(string id);
-        Task<IList<Post>> GetAll();
-        Task Create(Post model);
-        Task Edit(string id, Post updatedItem);
-        Task Delete(string id);
+        Task<Post> GetAsync(string id);
+        Task<IList<Post>> GetAllAsync();
+        Task<IList<Post>> GetPostsByAuthorAsync(string authorId);
+        Task CreateAsync(Post model);
+        Task EditAsync(string id, Post updatedItem);
+        Task DeleteAsync(string id);
     }
 }

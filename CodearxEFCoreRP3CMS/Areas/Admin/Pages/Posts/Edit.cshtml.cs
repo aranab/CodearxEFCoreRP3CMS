@@ -14,10 +14,12 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
     public class EditModel : PageModel
     {
         private readonly IPostRepository _repository;
+        private readonly IUserRepository _user;
 
-        public EditModel(IPostRepository repository)
+        public EditModel(IPostRepository repository, IUserRepository userRepository)
         {
             _repository = repository;
+            _user = userRepository; 
         }
 
         [BindProperty]
@@ -32,11 +34,16 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
             }
 
             // TODO: to retrieve the model from the data store
-            Post = await _repository.Get(postId);
+            Post = await _repository.GetAsync(postId);
 
             if (Post == null)
             {
                 return NotFound();
+            }
+
+            if (User.IsInRole("author") && (Post.AuthorID != _user.GetUserId(User)))
+            {
+                return Unauthorized();
             }
 
             return Page();
@@ -50,6 +57,16 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
                 return Page();
             }
 
+            if (Post == null)
+            {
+                return NotFound();
+            }
+
+            if (User.IsInRole("author") && (Post.AuthorID != _user.GetUserId(User)))
+            {
+                return Unauthorized();
+            }
+
             if (string.IsNullOrWhiteSpace(Post.ID))
             {
                 Post.ID = Post.Title;
@@ -60,7 +77,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 
             try
             {
-                await _repository.Edit(postId, Post);
+                await _repository.EditAsync(postId, Post);
 
                 return RedirectToPage("./Index");
             }

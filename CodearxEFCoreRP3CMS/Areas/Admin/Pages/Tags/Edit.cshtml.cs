@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CodearxEFCoreRP3CMS.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Tags
 {
+    [Authorize(Roles = "admin, editor")]
     public class EditModel : PageModel
     {
         private readonly ITagRepository _repository;

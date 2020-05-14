@@ -89,5 +89,16 @@ namespace CodearxEFCoreRP3CMS.Data
 
             await _context.SaveChangesAsync();
         }
+
+        private bool _disposed = false;
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _context.Dispose();
+            }
+
+            _disposed = true;
+        }
     }
 }

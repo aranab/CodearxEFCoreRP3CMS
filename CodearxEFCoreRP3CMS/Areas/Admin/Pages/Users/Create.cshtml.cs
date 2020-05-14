@@ -1,12 +1,14 @@
 using CodearxEFCoreRP3CMS.Areas.Admin.Services;
 using CodearxEFCoreRP3CMS.Areas.Admin.ViewModels;
 using CodearxEFCoreRP3CMS.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
 namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Users
 {
+    [Authorize(Roles = "admin")]
     public class CreateModel : PageModel
     {
         private readonly UserService _users;

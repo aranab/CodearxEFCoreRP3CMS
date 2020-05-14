@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CodearxEFCoreRP3CMS.Data
@@ -10,6 +11,7 @@ namespace CodearxEFCoreRP3CMS.Data
     public interface IUserRepository : IDisposable
     {
         Task<CmsUser> GetUserByNameAsync(string username);
+        string GetUserId(ClaimsPrincipal principal);
         Task<IList<CmsUser>> GetAllUsersAsync();
         Task CreateAsync(CmsUser user, string password);
         Task DeleteAsync(CmsUser user);

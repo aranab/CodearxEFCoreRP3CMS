@@ -16,14 +16,14 @@ namespace CodearxEFCoreRP3CMS.Data
             _context = context;
         }
 
-        public async Task<Post> Get(string id)
+        public async Task<Post> GetAsync(string id)
         {
             return await _context.Posts
                 .Include(p => p.Author)
                 .FirstOrDefaultAsync(p => p.ID == id);
         }
 
-        public async Task<IList<Post>> GetAll()
+        public async Task<IList<Post>> GetAllAsync()
         {
             return await _context.Posts
                 .Include(p => p.Author)
@@ -32,7 +32,17 @@ namespace CodearxEFCoreRP3CMS.Data
                 .ToListAsync();
         }
 
-        public async Task Create(Post model)
+        public async Task<IList<Post>> GetPostsByAuthorAsync(string authorId)
+        {
+            return await _context.Posts
+                .Include(p => p.Author)
+                .Where(p => p.AuthorID == authorId)
+                .OrderByDescending(p => p.Created)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task CreateAsync(Post model)
         {
             var post = await _context.Posts
                 .FirstOrDefaultAsync(p => p.ID == model.ID);
@@ -46,7 +56,7 @@ namespace CodearxEFCoreRP3CMS.Data
             await _context.SaveChangesAsync();
         }
 
-        public async Task Edit(string id, Post updatedItem)
+        public async Task EditAsync(string id, Post updatedItem)
         {
             var post = await _context.Posts
                 .FirstOrDefaultAsync(p => p.ID == id);
@@ -65,7 +75,7 @@ namespace CodearxEFCoreRP3CMS.Data
             await _context.SaveChangesAsync();
         }
         
-        public async Task Delete(string id)
+        public async Task DeleteAsync(string id)
         {
             var post = await _context.Posts
                 .FirstOrDefaultAsync(p => p.ID == id);
@@ -77,6 +87,17 @@ namespace CodearxEFCoreRP3CMS.Data
 
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
+        }
+
+        private bool _disposed = false;
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _context.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

@@ -14,10 +14,12 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
     public class CreateModel : PageModel
     {
         private readonly IPostRepository _repository;
+        private readonly IUserRepository _user;
 
-        public CreateModel(IPostRepository repository)
+        public CreateModel(IPostRepository repository, IUserRepository userRepository)
         {
             _repository = repository;
+            _user = userRepository;
         }
 
         // URL: {domain}/admin/posts/create
@@ -46,11 +48,11 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
             Post.Tags = Post.Tags.Select(tag => tag.MakeUrlFriendly()).ToList();
 
             Post.Created = DateTime.Now;
-            Post.AuthorID = "03b98dff-5653-4df2-9a36-3dfe1a8f1d80";
+            Post.AuthorID = _user.GetUserId(User);
 
             try
             {
-                await _repository.Create(Post);
+                await _repository.CreateAsync(Post);
 
                 return RedirectToPage("./Index");
             }

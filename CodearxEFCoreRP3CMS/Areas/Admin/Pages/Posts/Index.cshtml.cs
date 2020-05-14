@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using CodearxEFCoreRP3CMS.Data;
+﻿using CodearxEFCoreRP3CMS.Data;
 using CodearxEFCoreRP3CMS.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
 {
     public class IndexModel : PageModel
     {
         private readonly IPostRepository _repository;
+        private readonly IUserRepository _user;
 
-        public IndexModel(IPostRepository repository)
+        public IndexModel(IPostRepository repository, IUserRepository userRepository)
         {
             _repository = repository;
+            _user = userRepository;
         }
 
         public IList<Post> Posts { get; set; }
@@ -24,7 +22,9 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
         // URL: {domain}/admin/post
         public async Task OnGetAsync()
         {
-            Posts = await _repository.GetAll();
+            Posts = !User.IsInRole("author")
+                ? await _repository.GetAllAsync()
+                : await _repository.GetPostsByAuthorAsync(_user.GetUserId(User));
         }
     }
 }
