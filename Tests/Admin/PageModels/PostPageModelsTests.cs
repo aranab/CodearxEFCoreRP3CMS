@@ -19,10 +19,11 @@ namespace Tests.Admin.PageModels
         {
             // Arrange
             var id = "test-post";
-            var repo = Mock.Create<IPostRepository>();
-            var pageModel = new EditModel(repo);
+            var repoPost = Mock.Create<IPostRepository>();
+            var repoUser = Mock.Create<IUserRepository>();
+            var pageModel = new EditModel(repoPost, repoUser);
 
-            Mock.Arrange(() => repo.Get(id)).Returns(Task.FromResult(new Post { ID = id}));
+            Mock.Arrange(() => repoPost.GetAsync(id)).Returns(Task.FromResult(new Post { ID = id}));
 
             // Act
             await pageModel.OnGetAsync(id);
@@ -37,10 +38,11 @@ namespace Tests.Admin.PageModels
         {
             // Arrange
             var id = "test-post";
-            var repo = Mock.Create<IPostRepository>();
-            var pageModel = new EditModel(repo);
+            var repoPost = Mock.Create<IPostRepository>();
+            var repoUser = Mock.Create<IUserRepository>();
+            var pageModel = new EditModel(repoPost, repoUser);
 
-            Mock.Arrange(() => repo.Get(id)).Returns(Task.FromResult((Post)null));
+            Mock.Arrange(() => repoPost.GetAsync(id)).Returns(Task.FromResult((Post)null));
 
             // Act
             var result = await pageModel.OnGetAsync(id);
@@ -54,10 +56,11 @@ namespace Tests.Admin.PageModels
         {
             // Arrange
             var id = "test-post";
-            var repo = Mock.Create<IPostRepository>();
-            var pageModel = new EditModel(repo);
+            var repoPost = Mock.Create<IPostRepository>();
+            var repoUser = Mock.Create<IUserRepository>();
+            var pageModel = new EditModel(repoPost, repoUser);
 
-            Mock.Arrange(() => repo.Get(id)).Returns(Task.FromResult((Post)null));
+            Mock.Arrange(() => repoPost.GetAsync(id)).Returns(Task.FromResult((Post)null));
 
             // Act
             var result = await pageModel.OnPostAsync(id);
@@ -71,10 +74,11 @@ namespace Tests.Admin.PageModels
         {
             // Arrange
             var id = "test-post";
-            var repo = Mock.Create<IPostRepository>();
-            var pageModel = new EditModel(repo);
+            var repoPost = Mock.Create<IPostRepository>();
+            var repoUser = Mock.Create<IUserRepository>();
+            var pageModel = new EditModel(repoPost, repoUser);
 
-            Mock.Arrange(() => repo.Get(id)).Returns(Task.FromResult(new Post { ID = id }));
+            Mock.Arrange(() => repoPost.GetAsync(id)).Returns(Task.FromResult(new Post { ID = id }));
             pageModel.ModelState.AddModelError("key", "error message");
 
             // Act
@@ -88,16 +92,17 @@ namespace Tests.Admin.PageModels
         public async Task EditModel_PostRequestCallsEditAndRedirects()
         {
             // Arrange 
-            var repo = Mock.Create<IPostRepository>();
-            var pageModel = new EditModel(repo);
+            var repoPost = Mock.Create<IPostRepository>();
+            var repoUser = Mock.Create<IUserRepository>();
+            var pageModel = new EditModel(repoPost, repoUser);
 
-            Mock.Arrange(() => repo.Edit(Arg.IsAny<string>(), Arg.IsAny<Post>())).MustBeCalled();
+            Mock.Arrange(() => repoPost.EditAsync(Arg.IsAny<string>(), Arg.IsAny<Post>())).MustBeCalled();
 
             // Act
             var result = await pageModel.OnPostAsync("foo");
 
             // Assert
-            Mock.Assert(repo);
+            Mock.Assert(repoPost);
             Assert.IsType<RedirectToPageResult>(result);
         }
     }

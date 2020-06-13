@@ -24,7 +24,7 @@ namespace CodearxEFCoreRP3CMS
         {
             services.AddDbContext<CMSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CMSContext")));
 
-            services.AddIdentity<CmsUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<CmsUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<CMSContext>()
                 .AddDefaultTokenProviders();
 
@@ -38,6 +38,7 @@ namespace CodearxEFCoreRP3CMS
                 options.Cookie.Name = "CodearxEFCoreRP3CMS";
                 options.LoginPath = $"/Admin/Login";
                 options.LogoutPath = $"/Admin/Logout";
+                options.AccessDeniedPath = $"/Admin/AccessDenied";
             });
 
             services.AddScoped<IUserRepository, UserRepository>();

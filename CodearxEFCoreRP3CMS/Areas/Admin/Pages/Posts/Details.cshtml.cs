@@ -29,7 +29,7 @@ namespace CodearxEFCoreRP3CMS.Areas.Admin.Pages.Posts
                 return NotFound();
             }
 
-            Post = await _repository.Get(postId);
+            Post = await _repository.GetAsync(postId);
 
             if (Post == null)
             {

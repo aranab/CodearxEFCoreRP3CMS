@@ -3,13 +3,16 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Pages/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Index</h2>
 
-@*<p>
-    <a asp-page="Create">Create New</a>
-</p>*@
+<p>
+    <a asp-page="./Create">Create New</a>
+</p>
+
+@Html.AntiForgeryToken()
 <table class="table">
     <thead>
         <tr>
@@ -46,7 +49,7 @@
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-postId="@item.ID">Edit</a> |
-                    <a asp-page="./Delete" asp-route-postId="@item.ID">Delete</a>
+                    <a asp-page="./Delete" asp-route-postId="@item.ID" data-action="delete" data-value="@item.Title">Delete</a>
                 </td>
             </tr>
         }

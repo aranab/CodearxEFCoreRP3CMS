@@ -10,6 +10,8 @@
 <p>
     <a asp-page="Create">Create new</a>
 </p>
+
+@Html.AntiForgeryToken()
 <table class="table">
     <thead>
         <tr>
@@ -40,7 +42,7 @@
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-username="@item.UserName">Edit</a> |
-                    <a asp-page="./Delete" asp-route-username="@item.UserName">Delete</a>
+                    <a asp-page="./Delete" asp-route-username="@item.UserName" data-action="delete" data-value="@item.UserName">Delete</a>
                 </td>
             </tr>
         }

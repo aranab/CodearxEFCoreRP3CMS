@@ -26,6 +26,7 @@ namespace CodearxEFCoreRP3CMS.Models
         public DateTime Created { get; set; }
 
         [Display(Name = "Date Published")]
+        [DataType(DataType.Date)]
         public DateTime? Published { get; set; }        
 
         public string CombinedTags

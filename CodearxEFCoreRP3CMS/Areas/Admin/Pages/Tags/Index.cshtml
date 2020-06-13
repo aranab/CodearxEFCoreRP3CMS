@@ -7,6 +7,7 @@
 
 <h2>Tags</h2>
 
+@Html.AntiForgeryToken()
 <table class="table">
     <thead>
         <tr>
@@ -25,7 +26,7 @@
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-tag="@item">Edit</a> |
-                    <a asp-page="./Delete" asp-route-tag="@item">Delete</a>
+                    <a asp-page="./Delete" asp-route-tag="@item" data-action="delete" data-value="@item">Delete</a>
                 </td>
             </tr>
         }
