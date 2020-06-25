@@ -1,12 +1,12 @@
-﻿@page
-@model IndexModel
+﻿@page "{tagId}"
+@model TagModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Tag";
 
     ViewBag.IsIndex = true;
 }
 
-<h2>Home Page</h2>
+<h2>Posts Tagged with #@Model.TagName</h2>
 
 @{
     var count = 1;
@@ -20,6 +20,6 @@
     {
         <hr />
     }
-    
+
     count++;
-} 
+}

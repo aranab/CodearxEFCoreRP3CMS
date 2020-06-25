@@ -1,0 +1,19 @@
+﻿@model IList<string>
+
+@{
+    var count = 1;
+    var total = Model.Count;
+}
+@foreach (var tag in Model)
+{
+    @if (count < total)
+    {
+        <a asp-page="/Tag" asp-route-tagId="@tag">@tag,</a>
+    }
+    else
+    {
+        <a asp-page="/Tag" asp-route-tagId="@tag">@tag</a>
+    }
+
+    count++;
+}

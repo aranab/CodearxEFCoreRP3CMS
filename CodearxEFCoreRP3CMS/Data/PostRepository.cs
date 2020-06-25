@@ -63,7 +63,7 @@ namespace CodearxEFCoreRP3CMS.Data
 
             if (post == null)
             {
-                throw new KeyNotFoundException($"A post with the id of {id} does not in the data store.");
+                throw new KeyNotFoundException($"The post with the id of {id} does not in the data store.");
             }
 
             post.ID = updatedItem.ID;
@@ -74,7 +74,7 @@ namespace CodearxEFCoreRP3CMS.Data
 
             await _context.SaveChangesAsync();
         }
-        
+
         public async Task DeleteAsync(string id)
         {
             var post = await _context.Posts
@@ -87,6 +87,28 @@ namespace CodearxEFCoreRP3CMS.Data
 
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IList<Post>> GetPublishedPostsAsync()
+        {
+            return await _context.Posts
+                .Include(p => p.Author)
+                .Where(p => p.Published < DateTime.Now)
+                .OrderByDescending(p => p.Published)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<IList<Post>> GetPostsByTagAsync(string tagId)
+        {
+            var posts = await _context.Posts
+                .Include(p => p.Author)
+                .Where(p => p.CombinedTags.Contains(tagId))
+                .ToListAsync();
+
+            return posts
+                .Where(p => p.Tags.Contains(tagId, StringComparer.CurrentCultureIgnoreCase))
+                .ToList();
         }
 
         private bool _disposed = false;

@@ -1,0 +1,9 @@
+﻿@page "{postId}"
+@model PostModel
+@{
+    ViewData["Title"] = "Post";
+
+    ViewBag.IsIndex = false;
+}
+
+@await Html.PartialAsync("_RenderPost", Model.Post)

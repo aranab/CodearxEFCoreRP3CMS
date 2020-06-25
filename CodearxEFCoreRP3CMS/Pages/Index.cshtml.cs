@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using CodearxEFCoreRP3CMS.Data;
+using CodearxEFCoreRP3CMS.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CodearxEFCoreRP3CMS.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IPostRepository _posts;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IPostRepository postRepository)
         {
-            _logger = logger;
+            _posts = postRepository;
         }
 
-        public void OnGet()
-        {
+        public IList<Post> Posts { get; set; }
 
+        // URL: {domain}/
+        public async Task OnGetAsync()
+        {
+            Posts = await _posts.GetPublishedPostsAsync();
         }
     }
 }

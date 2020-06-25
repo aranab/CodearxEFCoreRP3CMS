@@ -10,9 +10,11 @@ namespace CodearxEFCoreRP3CMS.Data
     {
         Task<Post> GetAsync(string id);
         Task<IList<Post>> GetAllAsync();
+        Task<IList<Post>> GetPublishedPostsAsync();
         Task<IList<Post>> GetPostsByAuthorAsync(string authorId);
         Task CreateAsync(Post model);
         Task EditAsync(string id, Post updatedItem);
         Task DeleteAsync(string id);
+        Task<IList<Post>> GetPostsByTagAsync(string tagId);
     }
 }

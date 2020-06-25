@@ -1,0 +1,15 @@
+﻿@model CodearxEFCoreRP3CMS.Models.Post
+
+@if (ViewBag.IsIndex)
+{
+    <h2><a asp-page="/Post" asp-route-postId="@Model.ID">@Model.Title</a></h2>
+}
+else
+{
+    <h2>@Model.Title</h2>
+}
+<p>@Html.Raw(Model.Content)</p>
+<p>By: @Model.Author.DisplayName</p>
+<p>
+    Tags: @await Html.PartialAsync("_RenderTags", Model.Tags)
+</p>
