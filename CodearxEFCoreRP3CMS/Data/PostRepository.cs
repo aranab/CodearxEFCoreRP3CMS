@@ -16,6 +16,14 @@ namespace CodearxEFCoreRP3CMS.Data
             _context = context;
         }
 
+        public int CountPublished
+        {
+            get
+            {
+                return _context.Posts.Count(p => p.Published < DateTime.Now);
+            }
+        }
+
         public async Task<Post> GetAsync(string id)
         {
             return await _context.Posts
@@ -109,6 +117,18 @@ namespace CodearxEFCoreRP3CMS.Data
             return posts
                 .Where(p => p.Tags.Contains(tagId, StringComparer.CurrentCultureIgnoreCase))
                 .ToList();
+        }
+
+        public async Task<IList<Post>> GetPageAsync(int pageNumber, int pageSize)
+        {
+            var skip = (pageNumber - 1) * pageSize;
+
+            return await _context.Posts.Where(p => p.Published < DateTime.Now)
+                .Include(p => p.Author)
+                .OrderByDescending(p => p.Published)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
         }
 
         private bool _disposed = false;
